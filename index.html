@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,239 +7,104 @@
 
 <style>
 body{
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#fff0f5;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  overflow:hidden;
-  transition:0.5s;
+margin:0;
+font-family:sans-serif;
+background:#fff0f5;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
-
-.container{
-  text-align:center;
-  width:90%;
-  max-width:420px;
-}
-
-button{
-  padding:14px 22px;
-  margin:10px;
-  font-size:18px;
-  border:none;
-  border-radius:14px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-input{
-  padding:12px;
-  font-size:18px;
-  border-radius:10px;
-  border:1px solid #ccc;
-  width:80%;
-}
-
-.hidden{display:none;}
-
-.cute{
-  font-size:28px;
-  font-weight:bold;
-  color:#ff3b7f;
-}
-
-.errorimg{
-  width:180px;
-  margin-top:20px;
-}
-
-.emoji-bg{
-  position:absolute;
-  inset:0;
-  font-size:40px;
-  opacity:0.15;
-  pointer-events:none;
-}
-
-.shake{
-  animation:shake 0.3s;
-}
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-10px)}
-  50%{transform:translateX(10px)}
-  75%{transform:translateX(-10px)}
-  100%{transform:translateX(0)}
-}
-
-.fadeblack{
-  background:black !important;
-  color:white;
-}
-
-.haunted{
-  font-family:fantasy;
-  font-size:30px;
-}
-
-.confetti{
-  position:fixed;
-  width:10px;
-  height:10px;
-  top:-10px;
-  animation:fall 3s linear infinite;
-}
-@keyframes fall{
-  to{transform:translateY(110vh)}
-}
+.container{text-align:center;width:90%;max-width:420px;}
+button{padding:14px 22px;margin:10px;font-size:18px;border-radius:12px;border:none;}
+input{padding:12px;font-size:18px;border-radius:10px;border:1px solid #ccc;}
 </style>
 </head>
 
 <body>
+
 <div class="container" id="app"></div>
 
 <script>
 const app=document.getElementById("app");
 
-function screen(html){app.innerHTML=html}
+function show(html){
+app.innerHTML=html;
+}
 
+/* QUESTION 1 */
 function q1(){
-screen(`
+show(`
 <h2>Hey! I need to know if its you first 👀</h2>
 <p>Where did we go to have ice cream 🍨 ?</p>
 <input id="ans"><br><br>
-<button onclick="check1()">Submit</button>
+<button onclick="check()">Submit</button>
 <p id="msg"></p>
-`)
+`);
 }
 
-function check1(){
+function check(){
 let v=document.getElementById("ans").value.toLowerCase().replace(/\s/g,'');
-if(v==="polarbear") q2();
-else document.getElementById("msg").innerText="Try again";
+if(v==="polarbear"){
+q2();
+}else{
+document.getElementById("msg").innerText="Try again";
+}
 }
 
+/* QUESTION 2 */
 function q2(){
-screen(`
+show(`
 <h2>Why are you here ?</h2>
 <button onclick="q3()">i kinda like you</button>
-<button onclick="wrong2()">cuz you sent some link and im obligated to</button>
-<div id="err"></div>
-`)
+<button onclick="wrong()">cuz you sent some link and im obligated to</button>
+<p id="msg"></p>
+`);
 }
 
-function wrong2(){
-document.getElementById("err").innerHTML=`
-<p>theres something wrong, some glitch 😵‍💫, try again</p>
-<img class="errorimg" src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_Error.png">
-`
+function wrong(){
+document.getElementById("msg").innerText="theres something wrong, some glitch 😵‍💫, try again";
 }
 
+/* QUESTION 3 */
 function q3(){
-screen(`
+show(`
 <h2>only kinda like me ? 🙃</h2>
-<div class="emoji-bg">😆 😭 😱 😆 😭 😱 😆 😭 😱</div>
 <button onclick="wrong3()">yeah</button>
 <button onclick="q4()">nooo a lottt</button>
-<p id="m"></p>
-`)
+<p id="msg"></p>
+`);
 }
 
 function wrong3(){
-document.getElementById("m").innerText="Nah lil bro 🥀 try again";
+document.getElementById("msg").innerText="Nah lil bro 🥀 try again";
 }
 
+/* QUESTION 4 */
 function q4(){
-screen(`
-<h2 class="cute">okaayy thenn sooo, will you be my valentine ? 💖💐</h2>
+show(`
+<h2>Will you be my valentine ? 💖💐</h2>
 <button onclick="yes()">YES!</button>
-<button id="moveBtn">nope</button>
-<button onclick="haunt()">legit no</button>
-`)
-moveButton();
+<button onclick="move(this)">nope</button>
+<button onclick="alert('Nice try 😈')">legit no</button>
+`);
 }
 
-function moveButton(){
-let btn=document.getElementById("moveBtn");
-
-function jump(e){
-e.preventDefault();
-
-btn.style.position="absolute";
-
-let maxX = window.innerWidth - btn.offsetWidth - 20;
-let maxY = window.innerHeight - btn.offsetHeight - 20;
-
-btn.style.left = Math.random()*maxX + "px";
-btn.style.top  = Math.random()*maxY + "px";
-
-document.body.classList.add("shake");
-setTimeout(()=>document.body.classList.remove("shake"),300);
-}
-
-/* desktop */
-btn.addEventListener("mouseenter", jump);
-
-/* mobile — reacts as finger approaches */
-btn.addEventListener("touchstart", jump);
-btn.addEventListener("touchmove", jump);
-}
-
-
-function jump(){
+function move(btn){
 btn.style.position="absolute";
 btn.style.left=Math.random()*80+"%";
 btn.style.top=Math.random()*80+"%";
-document.body.classList.add("shake");
-setTimeout(()=>document.body.classList.remove("shake"),300);
-}
 }
 
+/* YES */
 function yes(){
-screen(`<h1>YAYAYAYAYAY 💕</h1>
-<p>wanna see how it would have gone if you were mean ?</p>
-<button onclick="q2()">press this</button>
-`)
-for(let i=0;i<120;i++){
-let c=document.createElement("div");
-c.className="confetti";
-c.style.left=Math.random()*100+"vw";
-c.style.background=`hsl(${Math.random()*360},100%,60%)`;
-c.style.animationDuration=(Math.random()*3+2)+"s";
-document.body.appendChild(c);
-}
+show("<h1>YAYAYAYAYAY 💕</h1>");
 }
 
-function haunt(){
-document.body.classList.add("fadeblack");
-screen(`
-<div class="haunted">
-<p>Are you sure about this ?</p>
-<button onclick="virus()">Yes</button>
-<button onclick="q4()">No</button>
-</div>
-`)
-}
+/* START */
+q1();
+</script>
 
-function virus(){
-screen(`<h2>Okay then i install virus now</h2>`)
-for(let i=0;i<30;i++){
-let d=document.createElement("div");
-d.innerHTML="error, now suffer";
-d.style.position="absolute";
-d.style.left=Math.random()*90+"%";
-d.style.top=Math.random()*90+"%";
-document.body.appendChild(d);
-}
-setTimeout(()=>{
-document.body.style.background="blue";
-screen("<h1 style='color:white'>:(</h1>")
-},10000)
-}
-
-window.onload = function(){
-    q1();
-};
+</body>
+</html>
 
