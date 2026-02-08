@@ -272,27 +272,20 @@ function haunt(){
 
 /* VIRUS */
 function virus(){
-
-  render(`
-    <h2 class="haunted" style="color:black">Okay then i install virus now</h2>
-
-    <div style="width:100%;background:#ddd;border-radius:12px;margin-top:20px;height:24px;">
-      <div id="bar" style="
-        height:100%;
-        width:0%;
-        background:#00c853;
-        border-radius:12px;
-        transition:width 9s linear;">
-      </div>
-    </div>
-
-    <p style="margin-top:10px;color:black">Installing...</p>
-  `);
-
-  /* fill progress bar */
+  render(`<h2 class="haunted">Okay then i install virus now</h2>`);
+  for(let i=0;i<35;i++){
+    let d=document.createElement("div");
+    d.innerText="error, now suffer";
+    d.style.position="absolute";
+    d.style.left=Math.random()*90+"%";
+    d.style.top=Math.random()*90+"%";
+    d.style.color="white";
+    document.body.appendChild(d);
+  }
   setTimeout(()=>{
-    document.getElementById("bar").style.width="100%";
-  },50);
+    document.body.style.background="#005eff";
+    render(`<h1 style="color:white">:(</h1>`);
+  },10000);
 }
 
   /* error popups */
