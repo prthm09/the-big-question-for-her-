@@ -18,7 +18,7 @@
 
 body{
   margin:0;
-  font-family:'Poppins',system-ui,sans-serif;
+  font-family:'Poppins',sans-serif;
   background:var(--pink);
   height:100vh;
   overflow:hidden;
@@ -33,7 +33,6 @@ body{
   padding:20px;
 }
 
-/* CARD */
 .card{
   width:100%;
   max-width:420px;
@@ -42,10 +41,10 @@ body{
   padding:30px 24px;
   text-align:center;
   box-shadow:0 25px 70px rgba(0,0,0,.15);
-  animation:cardIn .6s ease;
+  animation:fadeIn .6s ease;
 }
 
-@keyframes cardIn{
+@keyframes fadeIn{
   from{opacity:0;transform:translateY(25px)}
   to{opacity:1;transform:none}
 }
@@ -58,7 +57,6 @@ h2{margin-top:0}
   font-size:32px;
 }
 
-/* INPUT + BUTTONS */
 button{
   padding:14px 22px;
   margin:10px;
@@ -67,9 +65,7 @@ button{
   border-radius:16px;
   cursor:pointer;
   background:#ffd6e5;
-  transition:transform .2s;
 }
-button:active{transform:scale(.96)}
 
 .primary{
   background:var(--hot);
@@ -90,13 +86,11 @@ input{
   min-height:22px;
 }
 
-/* ERROR IMAGE */
 .error-img{
   width:180px;
   margin:18px auto;
 }
 
-/* EMOJI BACKGROUND */
 .emoji-bg{
   position:fixed;
   inset:0;
@@ -105,8 +99,9 @@ input{
   pointer-events:none;
 }
 
-/* SHAKE */
-.shake{animation:shake .3s}
+.shake{
+  animation:shake .3s;
+}
 @keyframes shake{
   0%{transform:translateX(0)}
   25%{transform:translateX(-10px)}
@@ -115,7 +110,6 @@ input{
   100%{transform:translateX(0)}
 }
 
-/* CONFETTI */
 .confetti{
   position:fixed;
   width:8px;height:8px;
@@ -126,15 +120,8 @@ input{
   to{transform:translateY(110vh)}
 }
 
-/* HAUNTED */
 .haunted{
-  color:white;
   font-family:fantasy;
-  animation:flicker 1.8s infinite;
-}
-@keyframes flicker{
-  0%,100%{opacity:1}
-  50%{opacity:.6}
 }
 </style>
 </head>
@@ -149,7 +136,6 @@ function render(html){
   app.innerHTML=`<div class="card">${html}</div>`;
 }
 
-/* RESET BACKGROUND (important fix) */
 function resetBg(){
   document.body.style.background="var(--pink)";
 }
@@ -158,11 +144,11 @@ function resetBg(){
 function q1(){
   resetBg();
   render(`
-  <h2>Hey! I need to know if it's you first 👀</h2>
-  <p>Where did we go to have ice cream 🍨 ?</p>
-  <input id="a">
-  <button class="primary" onclick="check1()">Submit</button>
-  <p class="msg" id="m"></p>
+    <h2>Hey! I need to know if it's you first 👀</h2>
+    <p>Where did we go to have ice cream 🍨 ?</p>
+    <input id="a">
+    <button class="primary" onclick="check1()">Submit</button>
+    <p class="msg" id="m"></p>
   `);
 }
 
@@ -175,31 +161,30 @@ function check1(){
 /* Q2 */
 function q2(){
   render(`
-  <h2>Why are you here ?</h2>
-  <button onclick="q3()">i kinda like you</button>
-  <button onclick="glitch()">cuz you sent some link and im obligated to</button>
-  <div id="g"></div>
+    <h2>Why are you here ?</h2>
+    <button onclick="q3()">i kinda like you</button>
+    <button onclick="glitch()">cuz you sent some link and im obligated to</button>
+    <div id="g"></div>
   `);
 }
 
 function glitch(){
   document.getElementById("g").innerHTML=`
-  <p class="msg">theres something wrong, some glitch 😵‍💫 try again</p>
-  <img class="error-img" src="Screenshot 2026-02-08 202027.png">
+    <p class="msg">theres something wrong, some glitch 😵‍💫 try again</p>
+    <img class="error-img" src="Screenshot 2026-02-08 202027.png">
   `;
 }
-
-
 
 /* Q3 */
 function q3(){
   document.body.insertAdjacentHTML("beforeend",
-  `<div class="emoji-bg">😆 😭 😱 😆 😭 😱 😆 😭 😱</div>`);
+    `<div class="emoji-bg">😆 😭 😱 😆 😭 😱 😆 😭 😱</div>`
+  );
   render(`
-  <h2>only kinda like me ? 🙃</h2>
-  <button onclick="nope3()">yeah</button>
-  <button class="primary" onclick="q4()">nooo a lottt</button>
-  <p class="msg" id="m"></p>
+    <h2>only kinda like me ? 🙃</h2>
+    <button onclick="nope3()">yeah</button>
+    <button class="primary" onclick="q4()">nooo a lottt</button>
+    <p class="msg" id="m"></p>
   `);
 }
 
@@ -211,18 +196,17 @@ function nope3(){
 function q4(){
   document.querySelector(".emoji-bg")?.remove();
   render(`
-  <h2 class="romantic">
-    okaayy thenn sooo,<br>
-    will you be my valentine ? 💖💐
-  </h2>
-  <button class="primary" onclick="yes()">YES!</button>
-  <button id="nope">nope</button>
-  <button onclick="haunt()">legit no</button>
+    <h2 class="romantic">
+      okaayy thenn sooo,<br>
+      will you be my valentine ? 💖💐
+    </h2>
+    <button class="primary" onclick="yes()">YES!</button>
+    <button id="nope">nope</button>
+    <button onclick="haunt()">legit no</button>
   `);
   moveNope();
 }
 
-/* MOVING BUTTON */
 function moveNope(){
   const b=document.getElementById("nope");
   function jump(e){
@@ -238,13 +222,13 @@ function moveNope(){
   b.addEventListener("touchmove",jump);
 }
 
-/* YES ENDING */
+/* YES */
 function yes(){
   resetBg();
   render(`
-  <h1 class="romantic">YAYAYAYAYAY 💕</h1>
-  <p>wanna see how it would have gone if you were mean ?</p>
-  <button onclick="q2()">press this</button>
+    <h1 class="romantic">YAYAYAYAYAY 💕</h1>
+    <p>wanna see how it would have gone if you were mean ?</p>
+    <button onclick="q2()">press this</button>
   `);
 
   for(let i=0;i<140;i++){
@@ -257,22 +241,40 @@ function yes(){
   }
 }
 
-/* HAUNTED PATH */
+/* HAUNTED */
 function haunt(){
   document.body.style.background="black";
   render(`
-  <div class="haunted" style="color:black">
-    <p>Are you sure about this ?</p>
-    <button onclick="virus()">Yes</button>
-    <button onclick="q4()">No</button>
-  </div>
+    <div class="haunted" style="color:black">
+      <p>Are you sure about this ?</p>
+      <button onclick="virus()">Yes</button>
+      <button onclick="q4()">No</button>
+    </div>
   `);
-
 }
 
 /* VIRUS */
 function virus(){
-  render(`<h2 style="colour:black" class="haunted">Okay then i install virus now</h2>`);
+  render(`
+    <h2 class="haunted" style="color:black">Okay then i install virus now</h2>
+
+    <div style="width:100%;background:#ddd;border-radius:12px;margin-top:20px;height:24px;">
+      <div id="bar" style="
+        height:100%;
+        width:0%;
+        background:#00c853;
+        border-radius:12px;
+        transition:width 9s linear;">
+      </div>
+    </div>
+
+    <p style="margin-top:10px;color:black">Installing...</p>
+  `);
+
+  setTimeout(()=>{
+    document.getElementById("bar").style.width="100%";
+  },50);
+
   for(let i=0;i<35;i++){
     let d=document.createElement("div");
     d.innerText="error, now suffer";
@@ -282,31 +284,7 @@ function virus(){
     d.style.color="white";
     document.body.appendChild(d);
   }
-  setTimeout(()=>{
-    document.body.style.background="#005eff";
-    render(`<h1 style="color:blue">:(</h1>`);
-  },10000);
-}
 
-  /* error popups */
-  for(let i=0;i<35;i++){
-    let d=document.createElement("div");
-    d.innerText="error, now suffer";
-    d.style.position="absolute";
-    d.style.left=Math.random()*90+"%";
-    d.style.top=Math.random()*90+"%";
-    d.style.color="white";
-    document.body.appendChild(d);
-  }
-
-  /* blue screen after 10s */
-  setTimeout(()=>{
-    document.body.style.background="#005eff";
-    render(`<h1 style="color:blue">:(</h1>`);
-  },10000);
-
-
-  }
   setTimeout(()=>{
     document.body.style.background="#005eff";
     render(`<h1 style="color:blue">:(</h1>`);
@@ -318,5 +296,3 @@ q1();
 </script>
 </body>
 </html>
-
-
