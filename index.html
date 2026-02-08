@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>💘</title>
 
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --pink:#fff0f5;
@@ -15,11 +18,11 @@
 
 body{
   margin:0;
-  font-family:'Segoe UI',system-ui,sans-serif;
+  font-family:'Poppins',system-ui,sans-serif;
   background:var(--pink);
   height:100vh;
   overflow:hidden;
-  transition:background .6s;
+  transition:background .8s ease;
 }
 
 #app{
@@ -30,19 +33,32 @@ body{
   padding:20px;
 }
 
+/* CARD */
 .card{
   width:100%;
   max-width:420px;
   background:white;
-  border-radius:22px;
-  padding:28px 22px;
+  border-radius:24px;
+  padding:30px 24px;
   text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,.12);
-  animation:fadeIn .6s ease;
+  box-shadow:0 25px 70px rgba(0,0,0,.15);
+  animation:cardIn .6s ease;
+}
+
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:none}
 }
 
 h2{margin-top:0}
 
+.romantic{
+  font-family:'Pacifico',cursive;
+  color:var(--hot);
+  font-size:32px;
+}
+
+/* INPUT + BUTTONS */
 button{
   padding:14px 22px;
   margin:10px;
@@ -51,9 +67,14 @@ button{
   border-radius:16px;
   cursor:pointer;
   background:#ffd6e5;
+  transition:transform .2s;
 }
+button:active{transform:scale(.96)}
 
-.primary{background:var(--hot);color:white}
+.primary{
+  background:var(--hot);
+  color:white;
+}
 
 input{
   padding:14px;
@@ -63,11 +84,10 @@ input{
   width:100%;
 }
 
-.msg{margin-top:12px;color:#ff4b4b}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:none}
+.msg{
+  margin-top:12px;
+  color:#ff4b4b;
+  min-height:22px;
 }
 
 /* ERROR IMAGE */
@@ -80,15 +100,13 @@ input{
 .emoji-bg{
   position:fixed;
   inset:0;
-  font-size:40px;
+  font-size:42px;
   opacity:.18;
   pointer-events:none;
 }
 
 /* SHAKE */
-.shake{
-  animation:shake .3s;
-}
+.shake{animation:shake .3s}
 @keyframes shake{
   0%{transform:translateX(0)}
   25%{transform:translateX(-10px)}
@@ -112,7 +130,7 @@ input{
 .haunted{
   color:white;
   font-family:fantasy;
-  animation:flicker 2s infinite;
+  animation:flicker 1.8s infinite;
 }
 @keyframes flicker{
   0%,100%{opacity:1}
@@ -131,129 +149,140 @@ function render(html){
   app.innerHTML=`<div class="card">${html}</div>`;
 }
 
-/* Q1 – SECURITY */
-function q1(){
-render(`
-<h2>Hey! I need to know if it's you first 👀</h2>
-<p>Where did we go to have ice cream 🍨 ?</p>
-<input id="a">
-<button class="primary" onclick="check1()">Submit</button>
-<p class="msg" id="m"></p>
-`);
+/* RESET BACKGROUND (important fix) */
+function resetBg(){
+  document.body.style.background="var(--pink)";
 }
+
+/* Q1 */
+function q1(){
+  resetBg();
+  render(`
+  <h2>Hey! I need to know if it's you first 👀</h2>
+  <p>Where did we go to have ice cream 🍨 ?</p>
+  <input id="a">
+  <button class="primary" onclick="check1()">Submit</button>
+  <p class="msg" id="m"></p>
+  `);
+}
+
 function check1(){
-let v=document.getElementById("a").value.toLowerCase().replace(/\s/g,'');
-if(v==="polarbear") q2();
-else document.getElementById("m").innerText="Try again";
+  let v=document.getElementById("a").value.toLowerCase().replace(/\s/g,'');
+  if(v==="polarbear") q2();
+  else document.getElementById("m").innerText="Try again";
 }
 
 /* Q2 */
 function q2(){
-render(`
-<h2>Why are you here ?</h2>
-<button onclick="q3()">i kinda like you</button>
-<button onclick="glitch()">cuz you sent some link and im obligated to</button>
-<div id="g"></div>
-`);
+  render(`
+  <h2>Why are you here ?</h2>
+  <button onclick="q3()">i kinda like you</button>
+  <button onclick="glitch()">cuz you sent some link and im obligated to</button>
+  <div id="g"></div>
+  `);
 }
+
 function glitch(){
-document.getElementById("g").innerHTML=`
-<p class="msg">theres something wrong, some glitch 😵‍💫 try again</p>
-<img class="error-img" src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_Error.png">
-`;
+  document.getElementById("g").innerHTML=`
+  <p class="msg">theres something wrong, some glitch 😵‍💫 try again</p>
+  <img class="error-img" src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_Error.png">
+  `;
 }
 
 /* Q3 */
 function q3(){
-document.body.insertAdjacentHTML("beforeend",
-`<div class="emoji-bg">😆 😭 😱 😆 😭 😱 😆 😭 😱</div>`
-);
-render(`
-<h2>only kinda like me ? 🙃</h2>
-<button onclick="nope3()">yeah</button>
-<button class="primary" onclick="q4()">nooo a lottt</button>
-<p class="msg" id="m"></p>
-`);
-}
-function nope3(){
-document.getElementById("m").innerText="Nah lil bro 🥀 try again";
+  document.body.insertAdjacentHTML("beforeend",
+  `<div class="emoji-bg">😆 😭 😱 😆 😭 😱 😆 😭 😱</div>`);
+  render(`
+  <h2>only kinda like me ? 🙃</h2>
+  <button onclick="nope3()">yeah</button>
+  <button class="primary" onclick="q4()">nooo a lottt</button>
+  <p class="msg" id="m"></p>
+  `);
 }
 
-/* Q4 – BIG QUESTION */
+function nope3(){
+  document.getElementById("m").innerText="Nah lil bro 🥀 try again";
+}
+
+/* Q4 */
 function q4(){
-document.querySelector(".emoji-bg")?.remove();
-render(`
-<h2 style="color:var(--hot);font-size:30px">
-okaayy thenn sooo,<br>will you be my valentine ? 💖💐
-</h2>
-<button class="primary" onclick="yes()">YES!</button>
-<button id="nope">nope</button>
-<button onclick="haunt()">legit no</button>
-`);
-moveNope();
+  document.querySelector(".emoji-bg")?.remove();
+  render(`
+  <h2 class="romantic">
+    okaayy thenn sooo,<br>
+    will you be my valentine ? 💖💐
+  </h2>
+  <button class="primary" onclick="yes()">YES!</button>
+  <button id="nope">nope</button>
+  <button onclick="haunt()">legit no</button>
+  `);
+  moveNope();
 }
 
 /* MOVING BUTTON */
 function moveNope(){
-const b=document.getElementById("nope");
-function jump(e){
-e.preventDefault();
-b.style.position="absolute";
-b.style.left=Math.random()*80+"%";
-b.style.top=Math.random()*80+"%";
-document.body.classList.add("shake");
-setTimeout(()=>document.body.classList.remove("shake"),300);
-}
-b.addEventListener("mouseenter",jump);
-b.addEventListener("touchstart",jump);
-b.addEventListener("touchmove",jump);
+  const b=document.getElementById("nope");
+  function jump(e){
+    e.preventDefault();
+    b.style.position="absolute";
+    b.style.left=Math.random()*80+"%";
+    b.style.top=Math.random()*80+"%";
+    document.body.classList.add("shake");
+    setTimeout(()=>document.body.classList.remove("shake"),300);
+  }
+  b.addEventListener("mouseenter",jump);
+  b.addEventListener("touchstart",jump);
+  b.addEventListener("touchmove",jump);
 }
 
 /* YES ENDING */
 function yes(){
-render(`
-<h1 style="color:var(--hot)">YAYAYAYAYAY 💕</h1>
-<p>wanna see how it would have gone if you were mean ?</p>
-<button onclick="q2()">press this</button>
-`);
-for(let i=0;i<140;i++){
-let c=document.createElement("div");
-c.className="confetti";
-c.style.left=Math.random()*100+"vw";
-c.style.background=`hsl(${Math.random()*360},100%,60%)`;
-c.style.animationDuration=(Math.random()*3+2)+"s";
-document.body.appendChild(c);
-}
+  resetBg();
+  render(`
+  <h1 class="romantic">YAYAYAYAYAY 💕</h1>
+  <p>wanna see how it would have gone if you were mean ?</p>
+  <button onclick="q2()">press this</button>
+  `);
+
+  for(let i=0;i<140;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    c.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(c);
+  }
 }
 
 /* HAUNTED PATH */
 function haunt(){
-document.body.style.background="black";
-render(`
-<div class="haunted">
-<p>Are you sure about this ?</p>
-<button onclick="virus()">Yes</button>
-<button onclick="q4()">No</button>
-</div>
-`);
+  document.body.style.background="black";
+  render(`
+  <div class="haunted">
+    <p>Are you sure about this ?</p>
+    <button onclick="virus()">Yes</button>
+    <button onclick="q4()">No</button>
+  </div>
+  `);
 }
 
-/* VIRUS PRANK */
+/* VIRUS */
 function virus(){
-render(`<h2 class="haunted">Okay then i install virus now</h2>`);
-for(let i=0;i<35;i++){
-let d=document.createElement("div");
-d.innerText="error, now suffer";
-d.style.position="absolute";
-d.style.left=Math.random()*90+"%";
-d.style.top=Math.random()*90+"%";
-d.style.color="white";
-document.body.appendChild(d);
-}
-setTimeout(()=>{
-document.body.style.background="#005eff";
-render(`<h1 style="color:white">:(</h1>`);
-},10000);
+  render(`<h2 class="haunted">Okay then i install virus now</h2>`);
+  for(let i=0;i<35;i++){
+    let d=document.createElement("div");
+    d.innerText="error, now suffer";
+    d.style.position="absolute";
+    d.style.left=Math.random()*90+"%";
+    d.style.top=Math.random()*90+"%";
+    d.style.color="white";
+    document.body.appendChild(d);
+  }
+  setTimeout(()=>{
+    document.body.style.background="#005eff";
+    render(`<h1 style="color:white">:(</h1>`);
+  },10000);
 }
 
 /* START */
@@ -261,6 +290,5 @@ q1();
 </script>
 </body>
 </html>
-
 
 
