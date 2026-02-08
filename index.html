@@ -163,8 +163,30 @@ moveButton();
 
 function moveButton(){
 let btn=document.getElementById("moveBtn");
-btn.addEventListener("mouseover",jump);
-btn.addEventListener("touchstart",jump);
+
+function jump(e){
+e.preventDefault();
+
+btn.style.position="absolute";
+
+let maxX = window.innerWidth - btn.offsetWidth - 20;
+let maxY = window.innerHeight - btn.offsetHeight - 20;
+
+btn.style.left = Math.random()*maxX + "px";
+btn.style.top  = Math.random()*maxY + "px";
+
+document.body.classList.add("shake");
+setTimeout(()=>document.body.classList.remove("shake"),300);
+}
+
+/* desktop */
+btn.addEventListener("mouseenter", jump);
+
+/* mobile — reacts as finger approaches */
+btn.addEventListener("touchstart", jump);
+btn.addEventListener("touchmove", jump);
+}
+
 
 function jump(){
 btn.style.position="absolute";
