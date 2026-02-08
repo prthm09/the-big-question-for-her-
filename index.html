@@ -185,9 +185,10 @@ function q2(){
 function glitch(){
   document.getElementById("g").innerHTML=`
   <p class="msg">theres something wrong, some glitch 😵‍💫 try again</p>
-  <img class="error-img" src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_Error.png">
+  <img class="error-img" src="https://i.imgur.com/9YjXH9Y.png">
   `;
 }
+
 
 /* Q3 */
 function q3(){
@@ -259,17 +260,18 @@ function yes(){
 function haunt(){
   document.body.style.background="black";
   render(`
-  <div class="haunted">
+  <div class="haunted" style="color:black">
     <p>Are you sure about this ?</p>
     <button onclick="virus()">Yes</button>
     <button onclick="q4()">No</button>
   </div>
   `);
+
 }
 
 /* VIRUS */
 function virus(){
-  render(`<h2 class="haunted">Okay then i install virus now</h2>`);
+  render(`<h2 class="haunted" style="color:black">Okay then i install virus now</h2>`);
   for(let i=0;i<35;i++){
     let d=document.createElement("div");
     d.innerText="error, now suffer";
