@@ -3,108 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine</title>
+<title>The Big Question</title>
 
 <style>
 body{
 margin:0;
-font-family:sans-serif;
+font-family:'Segoe UI',sans-serif;
 background:#fff0f5;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
+overflow:hidden;
+transition:.4s;
 }
-.container{text-align:center;width:90%;max-width:420px;}
-button{padding:14px 22px;margin:10px;font-size:18px;border-radius:12px;border:none;}
+#app{text-align:center;width:90%;max-width:420px;}
+button{
+padding:14px 22px;
+margin:10px;
+font-size:18px;
+border-radius:14px;
+border:none;
+cursor:pointer;
+}
 input{padding:12px;font-size:18px;border-radius:10px;border:1px solid #ccc;}
+
+.cute{font-size:30px;color:#ff2e7a;font-weight:bold;}
+
+.confetti{
+position:fixed;
+width:8px;height:8px;
+top:-10px;
+animation:fall linear forwards;
+}
+@keyframes fall{to{transform:translateY(110vh)}}
+
+.shake{animation:shake .3s}
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-8px)}
+50%{transform:translateX(8px)}
+75%{transform:translateX(-8px)}
+100%{transform:translateX(0)}
+}
 </style>
 </head>
 
 <body>
-
-<div class="container" id="app"></div>
+<div id="app"></div>
 
 <script>
 const app=document.getElementById("app");
 
-function show(html){
-app.innerHTML=html;
-}
+function show(x){app.innerHTML=x}
 
-/* QUESTION 1 */
+/* Q1 */
 function q1(){
 show(`
 <h2>Hey! I need to know if its you first 👀</h2>
 <p>Where did we go to have ice cream 🍨 ?</p>
-<input id="ans"><br><br>
-<button onclick="check()">Submit</button>
-<p id="msg"></p>
-`);
+<input id="a"><br><br>
+<button onclick="c1()">Submit</button>
+<p id="m"></p>
+`)
+}
+function c1(){
+let v=document.getElementById("a").value.toLowerCase().replace(/\s/g,'');
+if(v==="polarbear") q2();
+else document.getElementById("m").innerText="Try again";
 }
 
-function check(){
-let v=document.getElementById("ans").value.toLowerCase().replace(/\s/g,'');
-if(v==="polarbear"){
-q2();
-}else{
-document.getElementById("msg").innerText="Try again";
-}
-}
-
-/* QUESTION 2 */
+/* Q2 */
 function q2(){
 show(`
 <h2>Why are you here ?</h2>
 <button onclick="q3()">i kinda like you</button>
-<button onclick="wrong()">cuz you sent some link and im obligated to</button>
-<p id="msg"></p>
-`);
+<button onclick="err()">cuz you sent some link and im obligated to</button>
+<p id="m"></p>
+`)
+}
+function err(){
+document.getElementById("m").innerText="theres something wrong, some glitch 😵‍💫 try again";
 }
 
-function wrong(){
-document.getElementById("msg").innerText="theres something wrong, some glitch 😵‍💫, try again";
-}
-
-/* QUESTION 3 */
+/* Q3 */
 function q3(){
 show(`
 <h2>only kinda like me ? 🙃</h2>
-<button onclick="wrong3()">yeah</button>
+<button onclick="wrong()">yeah</button>
 <button onclick="q4()">nooo a lottt</button>
-<p id="msg"></p>
-`);
+<p id="m"></p>
+`)
+}
+function wrong(){
+document.getElementById("m").innerText="Nah lil bro 🥀 try again";
 }
 
-function wrong3(){
-document.getElementById("msg").innerText="Nah lil bro 🥀 try again";
-}
-
-/* QUESTION 4 */
+/* Q4 */
 function q4(){
 show(`
-<h2>Will you be my valentine ? 💖💐</h2>
+<h2 class="cute">okaayy thenn sooo, will you be my valentine ? 💖💐</h2>
 <button onclick="yes()">YES!</button>
-<button onclick="move(this)">nope</button>
-<button onclick="alert('Nice try 😈')">legit no</button>
-`);
+<button id="nope">nope</button>
+<button onclick="haunt()">legit no</button>
+`)
+move();
 }
 
-function move(btn){
-btn.style.position="absolute";
-btn.style.left=Math.random()*80+"%";
-btn.style.top=Math.random()*80+"%";
+function move(){
+let b=document.getElementById("nope");
+b.addEventListener("touchstart",jump);
+b.addEventListener("mouseenter",jump);
+function jump(){
+b.style.position="absolute";
+b.style.left=Math.random()*80+"%";
+b.style.top=Math.random()*80+"%";
+document.body.classList.add("shake");
+setTimeout(()=>document.body.classList.remove("shake"),300);
+}
 }
 
 /* YES */
 function yes(){
-show("<h1>YAYAYAYAYAY 💕</h1>");
+show(`
+<h1>YAYAYAYAYAY 💕</h1>
+<p>wanna see how it would have gone if you were mean ?</p>
+<button onclick="q2()">press this</button>
+`);
+for(let i=0;i<120;i++){
+let c=document.createElement("div");
+c.className="confetti";
+c.style.left=Math.random()*100+"vw";
+c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+c.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(c);
+}
 }
 
-/* START */
+/* prank */
+function haunt(){
+document.body.style.background="black";
+show(`
+<h2 style="color:white;font-family:fantasy">Are you sure about this ?</h2>
+<button onclick="virus()">Yes</button>
+<button onclick="q4()">No</button>
+`)
+}
+
+function virus(){
+show(`<h2 style="color:white">Okay then i install virus now</h2>`);
+for(let i=0;i<40;i++){
+let d=document.createElement("div");
+d.innerHTML="error, now suffer";
+d.style.position="absolute";
+d.style.left=Math.random()*90+"%";
+d.style.top=Math.random()*90+"%";
+d.style.color="white";
+document.body.appendChild(d);
+}
+setTimeout(()=>{
+document.body.style.background="blue";
+show("<h1 style='color:white'>:(</h1>");
+},10000)
+}
+
 q1();
 </script>
-
 </body>
 </html>
+
 
