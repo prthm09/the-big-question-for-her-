@@ -1,50 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Big Question</title>
+<title>💘</title>
 
 <style>
+:root{
+  --pink:#fff0f5;
+  --hot:#ff2e7a;
+}
+
+*{box-sizing:border-box}
+
 body{
-margin:0;
-font-family:'Segoe UI',sans-serif;
-background:#fff0f5;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-overflow:hidden;
-transition:.4s;
+  margin:0;
+  font-family:'Segoe UI',system-ui,sans-serif;
+  background:var(--pink);
+  height:100vh;
+  overflow:hidden;
+  transition:background .6s;
 }
-#app{text-align:center;width:90%;max-width:420px;}
+
+#app{
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.card{
+  width:100%;
+  max-width:420px;
+  background:white;
+  border-radius:22px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.12);
+  animation:fadeIn .6s ease;
+}
+
+h2{margin-top:0}
+
 button{
-padding:14px 22px;
-margin:10px;
-font-size:18px;
-border-radius:14px;
-border:none;
-cursor:pointer;
+  padding:14px 22px;
+  margin:10px;
+  font-size:18px;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  background:#ffd6e5;
 }
-input{padding:12px;font-size:18px;border-radius:10px;border:1px solid #ccc;}
 
-.cute{font-size:30px;color:#ff2e7a;font-weight:bold;}
+.primary{background:var(--hot);color:white}
 
-.confetti{
-position:fixed;
-width:8px;height:8px;
-top:-10px;
-animation:fall linear forwards;
+input{
+  padding:14px;
+  font-size:18px;
+  border-radius:12px;
+  border:1px solid #ccc;
+  width:100%;
 }
-@keyframes fall{to{transform:translateY(110vh)}}
 
-.shake{animation:shake .3s}
+.msg{margin-top:12px;color:#ff4b4b}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
+}
+
+/* ERROR IMAGE */
+.error-img{
+  width:180px;
+  margin:18px auto;
+}
+
+/* EMOJI BACKGROUND */
+.emoji-bg{
+  position:fixed;
+  inset:0;
+  font-size:40px;
+  opacity:.18;
+  pointer-events:none;
+}
+
+/* SHAKE */
+.shake{
+  animation:shake .3s;
+}
 @keyframes shake{
-0%{transform:translateX(0)}
-25%{transform:translateX(-8px)}
-50%{transform:translateX(8px)}
-75%{transform:translateX(-8px)}
-100%{transform:translateX(0)}
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-10px)}
+  50%{transform:translateX(10px)}
+  75%{transform:translateX(-10px)}
+  100%{transform:translateX(0)}
+}
+
+/* CONFETTI */
+.confetti{
+  position:fixed;
+  width:8px;height:8px;
+  top:-10px;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(110vh)}
+}
+
+/* HAUNTED */
+.haunted{
+  color:white;
+  font-family:fantasy;
+  animation:flicker 2s infinite;
+}
+@keyframes flicker{
+  0%,100%{opacity:1}
+  50%{opacity:.6}
 }
 </style>
 </head>
@@ -55,19 +127,21 @@ animation:fall linear forwards;
 <script>
 const app=document.getElementById("app");
 
-function show(x){app.innerHTML=x}
-
-/* Q1 */
-function q1(){
-show(`
-<h2>Hey! I need to know if its you first 👀</h2>
-<p>Where did we go to have ice cream 🍨 ?</p>
-<input id="a"><br><br>
-<button onclick="c1()">Submit</button>
-<p id="m"></p>
-`)
+function render(html){
+  app.innerHTML=`<div class="card">${html}</div>`;
 }
-function c1(){
+
+/* Q1 – SECURITY */
+function q1(){
+render(`
+<h2>Hey! I need to know if it's you first 👀</h2>
+<p>Where did we go to have ice cream 🍨 ?</p>
+<input id="a">
+<button class="primary" onclick="check1()">Submit</button>
+<p class="msg" id="m"></p>
+`);
+}
+function check1(){
 let v=document.getElementById("a").value.toLowerCase().replace(/\s/g,'');
 if(v==="polarbear") q2();
 else document.getElementById("m").innerText="Try again";
@@ -75,62 +149,74 @@ else document.getElementById("m").innerText="Try again";
 
 /* Q2 */
 function q2(){
-show(`
+render(`
 <h2>Why are you here ?</h2>
 <button onclick="q3()">i kinda like you</button>
-<button onclick="err()">cuz you sent some link and im obligated to</button>
-<p id="m"></p>
-`)
+<button onclick="glitch()">cuz you sent some link and im obligated to</button>
+<div id="g"></div>
+`);
 }
-function err(){
-document.getElementById("m").innerText="theres something wrong, some glitch 😵‍💫 try again";
+function glitch(){
+document.getElementById("g").innerHTML=`
+<p class="msg">theres something wrong, some glitch 😵‍💫 try again</p>
+<img class="error-img" src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_Error.png">
+`;
 }
 
 /* Q3 */
 function q3(){
-show(`
+document.body.insertAdjacentHTML("beforeend",
+`<div class="emoji-bg">😆 😭 😱 😆 😭 😱 😆 😭 😱</div>`
+);
+render(`
 <h2>only kinda like me ? 🙃</h2>
-<button onclick="wrong()">yeah</button>
-<button onclick="q4()">nooo a lottt</button>
-<p id="m"></p>
-`)
+<button onclick="nope3()">yeah</button>
+<button class="primary" onclick="q4()">nooo a lottt</button>
+<p class="msg" id="m"></p>
+`);
 }
-function wrong(){
+function nope3(){
 document.getElementById("m").innerText="Nah lil bro 🥀 try again";
 }
 
-/* Q4 */
+/* Q4 – BIG QUESTION */
 function q4(){
-show(`
-<h2 class="cute">okaayy thenn sooo, will you be my valentine ? 💖💐</h2>
-<button onclick="yes()">YES!</button>
+document.querySelector(".emoji-bg")?.remove();
+render(`
+<h2 style="color:var(--hot);font-size:30px">
+okaayy thenn sooo,<br>will you be my valentine ? 💖💐
+</h2>
+<button class="primary" onclick="yes()">YES!</button>
 <button id="nope">nope</button>
 <button onclick="haunt()">legit no</button>
-`)
-move();
+`);
+moveNope();
 }
 
-function move(){
-let b=document.getElementById("nope");
-b.addEventListener("touchstart",jump);
-b.addEventListener("mouseenter",jump);
-function jump(){
+/* MOVING BUTTON */
+function moveNope(){
+const b=document.getElementById("nope");
+function jump(e){
+e.preventDefault();
 b.style.position="absolute";
 b.style.left=Math.random()*80+"%";
 b.style.top=Math.random()*80+"%";
 document.body.classList.add("shake");
 setTimeout(()=>document.body.classList.remove("shake"),300);
 }
+b.addEventListener("mouseenter",jump);
+b.addEventListener("touchstart",jump);
+b.addEventListener("touchmove",jump);
 }
 
-/* YES */
+/* YES ENDING */
 function yes(){
-show(`
-<h1>YAYAYAYAYAY 💕</h1>
+render(`
+<h1 style="color:var(--hot)">YAYAYAYAYAY 💕</h1>
 <p>wanna see how it would have gone if you were mean ?</p>
 <button onclick="q2()">press this</button>
 `);
-for(let i=0;i<120;i++){
+for(let i=0;i<140;i++){
 let c=document.createElement("div");
 c.className="confetti";
 c.style.left=Math.random()*100+"vw";
@@ -140,21 +226,24 @@ document.body.appendChild(c);
 }
 }
 
-/* prank */
+/* HAUNTED PATH */
 function haunt(){
 document.body.style.background="black";
-show(`
-<h2 style="color:white;font-family:fantasy">Are you sure about this ?</h2>
+render(`
+<div class="haunted">
+<p>Are you sure about this ?</p>
 <button onclick="virus()">Yes</button>
 <button onclick="q4()">No</button>
-`)
+</div>
+`);
 }
 
+/* VIRUS PRANK */
 function virus(){
-show(`<h2 style="color:white">Okay then i install virus now</h2>`);
-for(let i=0;i<40;i++){
+render(`<h2 class="haunted">Okay then i install virus now</h2>`);
+for(let i=0;i<35;i++){
 let d=document.createElement("div");
-d.innerHTML="error, now suffer";
+d.innerText="error, now suffer";
 d.style.position="absolute";
 d.style.left=Math.random()*90+"%";
 d.style.top=Math.random()*90+"%";
@@ -162,14 +251,16 @@ d.style.color="white";
 document.body.appendChild(d);
 }
 setTimeout(()=>{
-document.body.style.background="blue";
-show("<h1 style='color:white'>:(</h1>");
-},10000)
+document.body.style.background="#005eff";
+render(`<h1 style="color:white">:(</h1>`);
+},10000);
 }
 
+/* START */
 q1();
 </script>
 </body>
 </html>
+
 
 
